@@ -1,4 +1,4 @@
-# Panacea — Healthcare Dashboard
+# SafeMed — Healthcare Dashboard
 
 A responsive, accessible healthcare operations dashboard built with Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion, Recharts, and Zustand.
 
