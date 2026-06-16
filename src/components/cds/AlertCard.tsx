@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, RotateCcw, Sparkles } from "lucide-react";
+import { AlertTriangle, CheckCircle2, RotateCcw, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
@@ -81,7 +81,7 @@ export function AlertCard({
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xs text-ink-faint">Confidence</p>
+          <p className="text-xs text-ink-faint">Certainty</p>
           <p className="text-lg font-extrabold text-ink">{alert.confidence}%</p>
         </div>
       </div>
@@ -93,9 +93,9 @@ export function AlertCard({
       <p className="mt-3 text-sm text-ink-muted">{alert.description}</p>
 
       <div className="mt-3 flex items-start gap-2 rounded-xl bg-brand-50 p-3">
-        <Sparkles size={15} className="mt-0.5 shrink-0 text-brand-600" />
+        <Activity size={15} className="mt-0.5 shrink-0 text-brand-600" />
         <p className="text-xs text-ink">
-          <span className="font-semibold text-brand-600">Recommended: </span>
+          <span className="font-semibold text-brand-600">Suggested action: </span>
           {alert.recommendation}
         </p>
       </div>

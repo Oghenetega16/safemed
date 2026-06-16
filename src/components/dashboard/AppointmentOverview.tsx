@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ChevronRight, CheckCircle2, AlertCircle, Clock3, XCircle } from "lucide-react";
 import { appointments, appointmentOverviewStats } from "@/data/dashboard";
+import { Avatar } from "@/components/ui/Avatar";
 import { cn } from "@/lib/cn";
 import type { Appointment } from "@/types";
 
@@ -65,13 +66,7 @@ export function AppointmentOverview() {
               <span className="w-16 shrink-0 text-xs font-semibold text-ink-muted">
                 {appt.time}
               </span>
-              <span
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                style={{ backgroundColor: appt.avatarColor }}
-                aria-hidden="true"
-              >
-                {appt.patientName.charAt(0)}
-              </span>
+              <Avatar name={appt.patientName} color={appt.avatarColor} size={36} />
               <div className="min-w-0 flex-1">
                 <p
                   className={cn(

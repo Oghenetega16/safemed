@@ -38,7 +38,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "layout-dashboard", href: "/" },
   { id: "patients", label: "Patients", icon: "users", href: "/patients" },
-  { id: "cds", label: "AI CDS", icon: "brain-circuit", href: "/ai-cds" },
+  { id: "cds", label: "Clinical CDS", icon: "brain-circuit", href: "/ai-cds" },
   { id: "appointments", label: "Appointments", icon: "calendar-clock", href: "/appointments" },
   { id: "clinical", label: "Clinical Operations", icon: "clipboard-pulse", href: "/clinical" },
   { id: "billing", label: "Billing & Revenue", icon: "wallet", href: "/billing" },

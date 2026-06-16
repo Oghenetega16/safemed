@@ -39,13 +39,13 @@ export default function AiCdsPage() {
   return (
     <>
       <PageHeader
-        title="AI Clinical Decision Support"
-        description="Predictive risk alerts generated from real-time vitals, labs and patient history."
+        title="Clinical Decision Support"
+        description="Risk flags and clinical alerts drawn from real-time vitals, lab trends and patient history."
         actions={
           <Button
             variant="outline"
             onClick={() =>
-              showToast({ title: "Insights refreshed", description: "Model re-scored all active patients.", tone: "success" })
+              showToast({ title: "Alerts refreshed", description: "All active patient flags have been re-evaluated.", tone: "success" })
             }
           >
             <RefreshCw size={15} />
@@ -56,9 +56,9 @@ export default function AiCdsPage() {
 
       <div className="space-y-4 px-4 lg:px-6">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <StatPill icon={AlertTriangle} label="Active Insights" value={stats.active} tone="brand" />
+          <StatPill icon={AlertTriangle} label="Active Alerts" value={stats.active} tone="brand" />
           <StatPill icon={ShieldCheck} label="Critical" value={stats.critical} tone="rose" />
-          <StatPill icon={Gauge} label="Avg. Confidence" value={`${stats.avgConfidence}%`} tone="violet" />
+          <StatPill icon={Gauge} label="Avg. Certainty" value={`${stats.avgConfidence}%`} tone="violet" />
           <StatPill icon={CheckCircle2} label="Resolved" value={stats.resolved} tone="mint" />
         </div>
 

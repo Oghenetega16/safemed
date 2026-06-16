@@ -10,6 +10,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { Select } from "@/components/ui/Input";
 import { Pagination } from "@/components/ui/Pagination";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Avatar } from "@/components/ui/Avatar";
 import { CreateInvoiceModal } from "@/components/billing/CreateInvoiceModal";
 import { useBillingStore } from "@/store/useBillingStore";
 import { useToastStore } from "@/store/useToastStore";
@@ -193,9 +194,7 @@ export default function BillingPage() {
                       <td className="px-5 py-3 font-semibold text-ink">{inv.invoiceNo}</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3">
-                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white" style={{ backgroundColor: inv.avatarColor }} aria-hidden="true">
-                            {inv.patientName.charAt(0)}
-                          </span>
+                          <Avatar name={inv.patientName} color={inv.avatarColor} size={32} />
                           <span className="text-ink-muted">{inv.patientName}</span>
                         </div>
                       </td>
@@ -231,9 +230,7 @@ export default function BillingPage() {
                 <li key={inv.id} className="p-4">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: inv.avatarColor }} aria-hidden="true">
-                        {inv.patientName.charAt(0)}
-                      </span>
+                      <Avatar name={inv.patientName} color={inv.avatarColor} size={36} />
                       <div>
                         <p className="text-sm font-semibold text-ink">{inv.patientName}</p>
                         <p className="text-xs text-ink-faint">{inv.invoiceNo} · {inv.service}</p>

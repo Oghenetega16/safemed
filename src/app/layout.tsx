@@ -12,7 +12,7 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: "SafeMed — Healthcare Operations Dashboard",
-  description: "AI-powered healthcare operations dashboard for clinics and hospitals.",
+  description: "Healthcare operations dashboard for clinics and hospitals.",
 };
 
 export const viewport: Viewport = {
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning className={`${manrope.variable} font-sans antialiased text-ink bg-bg`}>
+      <body className={`${manrope.variable} font-sans antialiased text-ink bg-bg`}>
         <QueryProvider>
           {children}
           <Toaster />

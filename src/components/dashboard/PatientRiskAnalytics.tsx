@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Sparkles, TrendingUp, ChevronUp } from "lucide-react";
+import { Activity, TrendingUp, ChevronUp } from "lucide-react";
 import { riskSegments, aiInsights } from "@/data/dashboard";
 
 export function PatientRiskAnalytics() {
@@ -14,13 +14,13 @@ export function PatientRiskAnalytics() {
         <div>
           <h2 className="text-base font-bold text-ink">Patient Risk Analytics</h2>
           <p className="mt-0.5 text-xs text-ink-faint">
-            Identifies high-risk patients based on predictive analytics
+            Risk stratification across current admissions
           </p>
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-2.5 py-1.5 text-xs font-semibold text-brand-600">
-          <Sparkles size={13} />
-          AI Insight
-        </button>
+        <span className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-2.5 py-1.5 text-xs font-semibold text-brand-600">
+          <Activity size={13} />
+          Live
+        </span>
       </div>
 
       <div className="mt-4 flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -73,7 +73,7 @@ export function PatientRiskAnalytics() {
         </ul>
       </div>
 
-      {/* AI Insights — signature element */}
+      {/* Clinical flags */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,12 +82,12 @@ export function PatientRiskAnalytics() {
       >
         <div className="flex items-center gap-2">
           <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-brand text-white">
-            <Sparkles size={12} className="animate-pulse-glow" />
+            <Activity size={12} />
           </span>
-          <h3 className="text-sm font-bold text-ink">AI Insights</h3>
+          <h3 className="text-sm font-bold text-ink">Clinical Flags</h3>
           <span className="ml-auto flex items-center gap-1 rounded-full bg-mint-soft px-2 py-0.5 text-[11px] font-semibold text-mint">
             <ChevronUp size={11} />
-            Live
+            Updated
           </span>
         </div>
         <ul className="mt-2.5 space-y-1.5">

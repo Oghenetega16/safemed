@@ -68,9 +68,9 @@ export const riskSegments: RiskSegment[] = [
 ];
 
 export const aiInsights: string[] = [
-  "Sepsis Risk Detected in 3 Patients",
-  "Chronic Disease Alert for 7 Patients",
-  "Model Confidence: 92%",
+  "Sepsis indicators present in 3 patients — review flagged.",
+  "7 patients flagged for chronic disease escalation risk.",
+  "Diagnostic confidence: 92% across active flags.",
 ];
 
 export const patientStats: PatientStat[] = [

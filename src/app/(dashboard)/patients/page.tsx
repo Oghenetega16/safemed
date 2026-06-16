@@ -13,6 +13,7 @@ import { PatientDrawer } from "@/components/patients/PatientDrawer";
 import { AddPatientModal } from "@/components/patients/AddPatientModal";
 import { usePatientsStore } from "@/store/usePatientsStore";
 import { cn } from "@/lib/cn";
+import { Avatar } from "@/components/ui/Avatar";
 import type { Patient, PatientStatus, RiskLevel } from "@/types";
 
 const statusTone: Record<PatientStatus, "mint" | "rose" | "sky" | "neutral"> = {
@@ -186,13 +187,7 @@ export default function PatientsPage() {
                     >
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3">
-                          <span
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                            style={{ backgroundColor: patient.avatarColor }}
-                            aria-hidden="true"
-                          >
-                            {patient.name.charAt(0)}
-                          </span>
+                          <Avatar name={patient.name} color={patient.avatarColor} size={36} />
                           <div className="min-w-0">
                             <p className="truncate font-semibold text-ink">{patient.name}</p>
                             <p className="text-xs text-ink-faint">{patient.id}</p>
@@ -235,13 +230,7 @@ export default function PatientsPage() {
                     onClick={() => setSelectedPatient(patient)}
                     className="flex w-full items-center gap-3 p-4 text-left transition-colors hover:bg-bg-subtle"
                   >
-                    <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                      style={{ backgroundColor: patient.avatarColor }}
-                      aria-hidden="true"
-                    >
-                      {patient.name.charAt(0)}
-                    </span>
+                    <Avatar name={patient.name} color={patient.avatarColor} size={40} />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold text-ink">{patient.name}</p>
                       <p className="truncate text-xs text-ink-faint">{patient.condition} · {patient.ward}</p>

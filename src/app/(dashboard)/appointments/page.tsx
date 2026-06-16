@@ -11,6 +11,8 @@ import {
   Calendar as CalendarIcon,
   XCircle,
   RotateCcw,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -19,11 +21,11 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { Select } from "@/components/ui/Input";
 import { Pagination } from "@/components/ui/Pagination";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Avatar } from "@/components/ui/Avatar";
 import { NewAppointmentModal } from "@/components/appointments/NewAppointmentModal";
 import { useAppointmentsStore } from "@/store/useAppointmentsStore";
 import { useToastStore } from "@/store/useToastStore";
 import { doctorOptions } from "@/data/appointments";
-import { calendarDays } from "@/data/dashboard";
 import { cn } from "@/lib/cn";
 import type { AppointmentRecord, AppointmentStatus } from "@/types";
 
@@ -52,8 +54,37 @@ export default function AppointmentsPage() {
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "All">("All");
   const [doctorFilter, setDoctorFilter] = useState<string>("All");
   const [page, setPage] = useState(1);
-  const [selectedDate, setSelectedDate] = useState("2025-02-18");
+  const _today = new Date();
+  const todayStr = `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
+
+  const [selectedDate, setSelectedDate] = useState(todayStr);
+  const [calViewYear, setCalViewYear] = useState(_today.getFullYear());
+  const [calViewMonth, setCalViewMonth] = useState(_today.getMonth());
   const [newOpen, setNewOpen] = useState(false);
+
+  const calMonthLabel = new Date(calViewYear, calViewMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+  const calGrid = useMemo(() => {
+    const firstDay = new Date(calViewYear, calViewMonth, 1).getDay();
+    const startOffset = (firstDay + 6) % 7;
+    const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+    const daysInPrev = new Date(calViewYear, calViewMonth, 0).getDate();
+    const cells: { date: number; isCurrentMonth: boolean }[] = [];
+    for (let i = startOffset - 1; i >= 0; i--) cells.push({ date: daysInPrev - i, isCurrentMonth: false });
+    for (let d = 1; d <= daysInMonth; d++) cells.push({ date: d, isCurrentMonth: true });
+    const rem = (7 - (cells.length % 7)) % 7;
+    for (let d = 1; d <= rem; d++) cells.push({ date: d, isCurrentMonth: false });
+    return cells;
+  }, [calViewYear, calViewMonth]);
+
+  const prevCalMonth = () => {
+    if (calViewMonth === 0) { setCalViewMonth(11); setCalViewYear((y) => y - 1); }
+    else setCalViewMonth((m) => m - 1);
+  };
+  const nextCalMonth = () => {
+    if (calViewMonth === 11) { setCalViewMonth(0); setCalViewYear((y) => y + 1); }
+    else setCalViewMonth((m) => m + 1);
+  };
 
   const stats = useMemo(() => {
     const total = appointments.length;
@@ -80,15 +111,16 @@ export default function AppointmentsPage() {
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const dayCounts = useMemo(() => {
+    const prefix = `${calViewYear}-${String(calViewMonth + 1).padStart(2, "0")}-`;
     const counts: Record<number, number> = {};
     appointments.forEach((a) => {
-      if (a.date.startsWith("2025-02-")) {
+      if (a.date.startsWith(prefix)) {
         const day = parseInt(a.date.slice(8), 10);
         counts[day] = (counts[day] ?? 0) + 1;
       }
     });
     return counts;
-  }, [appointments]);
+  }, [appointments, calViewYear, calViewMonth]);
 
   const dayAppointments = useMemo(
     () => appointments.filter((a) => a.date === selectedDate).sort((a, b) => a.time.localeCompare(b.time)),
@@ -136,7 +168,7 @@ export default function AppointmentsPage() {
         <div className="rounded-xl2 border border-border bg-bg-surface p-4 shadow-card">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-1 rounded-xl bg-bg-subtle p-1">
-              <button aria-label="List view"
+              <button
                 onClick={() => setView("list")}
                 aria-pressed={view === "list"}
                 className={cn(
@@ -147,7 +179,7 @@ export default function AppointmentsPage() {
                 <List size={14} />
                 List
               </button>
-              <button aria-label="Calendar view"
+              <button
                 onClick={() => setView("calendar")}
                 aria-pressed={view === "calendar"}
                 className={cn(
@@ -163,7 +195,7 @@ export default function AppointmentsPage() {
             {view === "list" && (
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <SearchInput value={search} onChange={(v) => updateFilter(() => setSearch(v))} placeholder="Search patient, type or ID..." className="sm:w-64" />
-                <div className="flex gap-2 text-xs">
+                <div className="flex gap-2">
                   <Select value={statusFilter} onChange={(e) => updateFilter(() => setStatusFilter(e.target.value as typeof statusFilter))} className="w-auto" aria-label="Filter by status">
                     {statusFilters.map((s) => (
                       <option key={s} value={s} className="capitalize">
@@ -207,9 +239,7 @@ export default function AppointmentsPage() {
                         <tr key={appt.id} className="border-b border-border last:border-0 hover:bg-bg-subtle">
                           <td className="px-5 py-3">
                             <div className="flex items-center gap-3">
-                              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: appt.avatarColor }} aria-hidden="true">
-                                {appt.patientName.charAt(0)}
-                              </span>
+                              <Avatar name={appt.patientName} color={appt.avatarColor} size={36} />
                               <div className="min-w-0">
                                 <p className="truncate font-semibold text-ink">{appt.patientName}</p>
                                 <p className="text-xs text-ink-faint">{appt.id}</p>
@@ -243,9 +273,7 @@ export default function AppointmentsPage() {
                   {pageItems.map((appt) => (
                     <li key={appt.id} className="p-4">
                       <div className="flex items-start gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: appt.avatarColor }} aria-hidden="true">
-                          {appt.patientName.charAt(0)}
-                        </span>
+                        <Avatar name={appt.patientName} color={appt.avatarColor} size={40} />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-2">
                             <div>
@@ -275,33 +303,45 @@ export default function AppointmentsPage() {
         ) : (
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <div className="rounded-xl2 border border-border bg-bg-surface p-5 shadow-card lg:col-span-1">
-              <h2 className="text-base font-bold text-ink">February 2025</h2>
-              <p className="mt-0.5 text-xs text-ink-faint">Tap a date to view its schedule</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-bold text-ink">{calMonthLabel}</h2>
+                  <p className="mt-0.5 text-xs text-ink-faint">Tap a date to view its schedule</p>
+                </div>
+                <div className="flex items-center gap-1 rounded-lg border border-border px-2 py-1">
+                  <button onClick={prevCalMonth} className="rounded p-0.5 text-ink-muted hover:bg-bg-subtle" aria-label="Previous month"><ChevronLeft size={14} /></button>
+                  <button onClick={nextCalMonth} className="rounded p-0.5 text-ink-muted hover:bg-bg-subtle" aria-label="Next month"><ChevronRight size={14} /></button>
+                </div>
+              </div>
               <div className="mt-4 grid grid-cols-7 gap-1 text-center">
                 {weekdays.map((day) => (
                   <span key={day} className="text-[11px] font-semibold text-ink-faint">{day}</span>
                 ))}
               </div>
               <div className="mt-1 grid grid-cols-7 gap-1">
-                {calendarDays.map((day, i) => {
-                  const dateStr = `2025-02-${String(day.date).padStart(2, "0")}`;
-                  const isSelected = day.isCurrentMonth && dateStr === selectedDate;
-                  const count = day.isCurrentMonth ? dayCounts[day.date] ?? 0 : 0;
+                {calGrid.map((cell, i) => {
+                  const dateStr = cell.isCurrentMonth
+                    ? `${calViewYear}-${String(calViewMonth + 1).padStart(2, "0")}-${String(cell.date).padStart(2, "0")}`
+                    : "";
+                  const isSelected = cell.isCurrentMonth && dateStr === selectedDate;
+                  const count = cell.isCurrentMonth ? dayCounts[cell.date] ?? 0 : 0;
+                  const isToday = cell.isCurrentMonth && dateStr === todayStr;
                   return (
                     <button
                       key={i}
-                      onClick={() => day.isCurrentMonth && setSelectedDate(dateStr)}
-                      disabled={!day.isCurrentMonth}
-                      aria-current={isSelected ? "date" : undefined}
-                      aria-label={`February ${day.date}${count > 0 ? `, ${count} appointments` : ""}`}
+                      onClick={() => cell.isCurrentMonth && setSelectedDate(dateStr)}
+                      disabled={!cell.isCurrentMonth}
+                      aria-current={isToday ? "date" : undefined}
+                      aria-label={cell.isCurrentMonth ? `${dateStr}${count > 0 ? `, ${count} appointments` : ""}` : undefined}
                       className={cn(
                         "flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg text-xs font-medium transition-colors",
-                        !day.isCurrentMonth && "text-ink-faint/40",
-                        day.isCurrentMonth && !isSelected && "text-ink-muted hover:bg-bg-subtle",
+                        !cell.isCurrentMonth && "text-ink-faint/40 cursor-default",
+                        cell.isCurrentMonth && !isSelected && !isToday && "text-ink-muted hover:bg-bg-subtle",
+                        isToday && !isSelected && "ring-1 ring-brand text-brand font-bold",
                         isSelected && "bg-brand text-white shadow-soft"
                       )}
                     >
-                      {day.date}
+                      {cell.date}
                       {count > 0 && (
                         <span className={cn("h-1 w-1 rounded-full", isSelected ? "bg-white" : "bg-brand")} />
                       )}
@@ -313,7 +353,9 @@ export default function AppointmentsPage() {
 
             <div className="space-y-3 lg:col-span-2">
               <h2 className="text-base font-bold text-ink">
-                {new Date(`${selectedDate}T00:00:00`).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
+                {selectedDate
+                  ? new Date(`${selectedDate}T00:00:00`).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })
+                  : "Select a date"}
               </h2>
               {dayAppointments.length === 0 ? (
                 <EmptyState icon={CalendarIcon} title="No appointments on this date" description="Select a different date or schedule a new appointment." />
@@ -321,9 +363,7 @@ export default function AppointmentsPage() {
                 dayAppointments.map((appt) => (
                   <div key={appt.id} className="flex flex-wrap items-center gap-3 rounded-xl2 border border-border bg-bg-surface p-4 shadow-card">
                     <span className="w-20 shrink-0 text-sm font-semibold text-ink-muted">{appt.time}</span>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: appt.avatarColor }} aria-hidden="true">
-                      {appt.patientName.charAt(0)}
-                    </span>
+                    <Avatar name={appt.patientName} color={appt.avatarColor} size={40} />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold text-ink">{appt.patientName}</p>
                       <p className="truncate text-xs text-ink-faint">{appt.doctor} · {appt.department} · {appt.type} · {appt.duration}</p>

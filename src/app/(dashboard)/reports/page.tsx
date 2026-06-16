@@ -101,7 +101,7 @@ export default function ReportsPage() {
             </div>
             <Button
               variant="outline"
-              onClick={() => showToast({ title: "Report exported", description: "Your analytics report has been generated as a PDF.", tone: "success" })}
+              onClick={() => showToast({ title: "Report exported", description: "Your analytics report is ready for download.", tone: "success" })}
             >
               <Download size={15} />
               Export Report

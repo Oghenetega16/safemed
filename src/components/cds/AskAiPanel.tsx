@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Send, Bot, User } from "lucide-react";
+import { Send, MessageSquare, User } from "lucide-react";
 import { useCdsStore } from "@/store/useCdsStore";
 import { cn } from "@/lib/cn";
 
@@ -28,11 +28,11 @@ export function AskAiPanel() {
     <div className="flex h-full flex-col rounded-xl2 border border-border bg-bg-surface shadow-card">
       <div className="flex items-center gap-2 border-b border-border p-4">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white">
-          <Sparkles size={15} />
+          <MessageSquare size={15} />
         </span>
         <div>
-          <h2 className="text-sm font-bold text-ink">Ask SafeMed AI</h2>
-          <p className="text-xs text-ink-faint">Clinical insight assistant</p>
+          <h2 className="text-sm font-bold text-ink">Clinical Query Assistant</h2>
+          <p className="text-xs text-ink-faint">Ask about alerts, patients or risk flags</p>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function AskAiPanel() {
                 message.role === "user" ? "bg-brand-50 text-brand-600" : "bg-violet-soft text-violet"
               )}
             >
-              {message.role === "user" ? <User size={13} /> : <Bot size={13} />}
+              {message.role === "user" ? <User size={13} /> : <MessageSquare size={13} />}
             </span>
             <div
               className={cn(
@@ -60,7 +60,7 @@ export function AskAiPanel() {
         {isThinking && (
           <div className="flex items-start gap-2">
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-soft text-violet">
-              <Bot size={13} />
+              <MessageSquare size={13} />
             </span>
             <div className="flex items-center gap-1 rounded-xl bg-bg-subtle px-3 py-2.5">
               {[0, 1, 2].map((i) => (
@@ -98,15 +98,15 @@ export function AskAiPanel() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about a patient or alert..."
-            aria-label="Ask SafeMed AI"
+            placeholder="Query a patient, alert or department..."
+            aria-label="Clinical query input"
             className="w-full rounded-xl border border-border bg-bg-subtle px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-brand focus:bg-bg-surface focus:outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim() || isThinking}
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-white transition-opacity disabled:opacity-40"
-            aria-label="Send message"
+            aria-label="Send query"
           >
             <Send size={16} />
           </button>

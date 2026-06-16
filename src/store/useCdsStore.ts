@@ -11,7 +11,7 @@ function generateAssistantReply(query: string, alerts: ClinicalAlert[]): string 
   if (q.includes("sepsis")) {
     const match = alerts.find((a) => a.category === "Sepsis Risk");
     return match
-      ? `${match.patientName} (${match.patientId}) is showing early sepsis indicators with ${match.confidence}% model confidence. Recommended action: ${match.recommendation}`
+      ? `${match.patientName} (${match.patientId}) has active sepsis flags with ${match.confidence}% diagnostic certainty. Suggested action: ${match.recommendation}`
       : "No active sepsis-risk alerts at this time.";
   }
 
@@ -25,7 +25,7 @@ function generateAssistantReply(query: string, alerts: ClinicalAlert[]): string 
   if (q.includes("summary") || q.includes("overview") || q.includes("today")) {
     return `Currently tracking ${active.length} active insight(s) across the unit: ${critical.length} critical, ${alerts.filter(
       (a) => a.severity === "high" && a.status !== "resolved"
-    ).length} high, and ${alerts.filter((a) => a.severity === "moderate" && a.status !== "resolved").length} moderate priority. Average model confidence is ${Math.round(
+    ).length} high, and ${alerts.filter((a) => a.severity === "moderate" && a.status !== "resolved").length} moderate priority. Average certainty score is ${Math.round(
       alerts.reduce((sum, a) => sum + a.confidence, 0) / alerts.length
     )}%.`;
   }
@@ -60,7 +60,7 @@ export const useCdsStore = create<CdsState>((set, get) => ({
       id: "intro",
       role: "assistant",
       content:
-        "Hi, I'm SafeMed AI. Ask me about active alerts, a specific patient, or request a summary of today's clinical risks.",
+        "Hello. You can query active alerts, request a patient risk summary, or ask about a specific concern — type below or use a quick prompt.",
     },
   ],
   isThinking: false,

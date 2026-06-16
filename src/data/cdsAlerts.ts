@@ -9,7 +9,7 @@ export const cdsAlerts: ClinicalAlert[] = [
     category: "Sepsis Risk",
     title: "Early Sepsis Indicators Detected",
     description:
-      "Heart rate, temperature and lactate trends over the last 4 hours match early-stage sepsis patterns with high model confidence.",
+      "Heart rate, temperature and lactate trends over the last 4 hours are consistent with early-stage sepsis. Clinical review recommended.",
     recommendation: "Initiate sepsis bundle: blood cultures, broad-spectrum antibiotics within 1 hour, and 30mL/kg IV fluid bolus.",
     confidence: 94,
     timestamp: "Today, 8:42 AM",
@@ -62,7 +62,7 @@ export const cdsAlerts: ClinicalAlert[] = [
     severity: "high",
     category: "Readmission Risk",
     title: "High 30-Day Readmission Probability",
-    description: "Model estimates a 78% probability of readmission within 30 days based on COPD severity, prior admissions, and social factors.",
+    description: "Risk assessment estimates a 78% probability of readmission within 30 days based on COPD severity, prior admissions, and social factors.",
     recommendation: "Schedule post-discharge pulmonary follow-up within 7 days and enroll in home oxygen monitoring program.",
     confidence: 79,
     timestamp: "Yesterday, 2:05 PM",

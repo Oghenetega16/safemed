@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Input";
 import { useClinicalStore } from "@/store/useClinicalStore";
 import { useToastStore } from "@/store/useToastStore";
+import { Avatar } from "@/components/ui/Avatar";
 import { wards as wardData } from "@/data/clinical";
 import { cn } from "@/lib/cn";
 import type { StaffStatus, OperationStatus } from "@/types";
@@ -117,9 +118,7 @@ export default function ClinicalOperationsPage() {
             <ul className="mt-4 max-h-[420px] space-y-2 overflow-y-auto scrollbar-thin pr-1">
               {filteredStaff.map((member) => (
                 <li key={member.id} className="flex items-center gap-3 rounded-xl border border-border p-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: member.avatarColor }} aria-hidden="true">
-                    {member.name.charAt(0)}
-                  </span>
+                  <Avatar name={member.name} color={member.avatarColor} size={36} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold text-ink">{member.name}</p>
                     <p className="truncate text-xs text-ink-faint">{member.role} · {member.shift}</p>

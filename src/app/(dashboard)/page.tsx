@@ -1,4 +1,7 @@
-import { Plus, CalendarDays } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { CalendarDays, Plus } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { StatCards } from "@/components/dashboard/StatCards";
@@ -6,8 +9,17 @@ import { PatientRiskAnalytics } from "@/components/dashboard/PatientRiskAnalytic
 import { PatientStatistics } from "@/components/dashboard/PatientStatistics";
 import { AppointmentOverview } from "@/components/dashboard/AppointmentOverview";
 import { AppointmentCalendar } from "@/components/dashboard/AppointmentCalendar";
+import { NewAppointmentModal } from "@/components/appointments/NewAppointmentModal";
 
 export default function DashboardPage() {
+  const [apptOpen, setApptOpen] = useState(false);
+
+  const today = new Date().toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
     <>
       <PageHeader
@@ -15,13 +27,13 @@ export default function DashboardPage() {
         description="Welcome back — here's what's happening across SafeMed today."
         actions={
           <>
-            <Button variant="success">
+            <Button onClick={() => setApptOpen(true)} variant="success">
               <Plus size={16} />
               Add New Appointment
             </Button>
             <div className="flex items-center gap-1.5 rounded-xl border border-border bg-bg-surface px-3 py-2 text-sm font-medium text-ink-muted">
               <CalendarDays size={15} />
-              16 Feb, 2025
+              {today}
             </div>
           </>
         }
@@ -42,6 +54,8 @@ export default function DashboardPage() {
           <AppointmentCalendar />
         </div>
       </div>
+
+      <NewAppointmentModal open={apptOpen} onClose={() => setApptOpen(false)} />
     </>
   );
 }

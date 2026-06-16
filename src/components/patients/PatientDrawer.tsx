@@ -4,6 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Phone, Mail, Droplet, BedDouble, Stethoscope, CalendarDays, Clock } from "lucide-react";
 import { Drawer } from "@/components/ui/Drawer";
 import { Badge } from "@/components/ui/Badge";
+import { Avatar } from "@/components/ui/Avatar";
 import { Tabs } from "@/components/ui/Tabs";
 import type { Patient, PatientStatus, RiskLevel } from "@/types";
 
@@ -40,13 +41,7 @@ export function PatientDrawer({
   return (
     <Drawer open={open} onClose={onClose} title={patient.name} description={`${patient.id} · ${patient.condition}`}>
       <div className="flex items-center gap-3">
-        <span
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white"
-          style={{ backgroundColor: patient.avatarColor }}
-          aria-hidden="true"
-        >
-          {patient.name.charAt(0)}
-        </span>
+        <Avatar name={patient.name} color={patient.avatarColor} size={48} />
         <div className="flex flex-wrap items-center gap-2">
           <Badge tone={statusTone[patient.status]}>{patient.status}</Badge>
           <Badge tone={riskTone[patient.riskLevel]}>{patient.riskLevel} Risk</Badge>
@@ -90,22 +85,15 @@ export function PatientDrawer({
                           <CartesianGrid stroke="#ECEEF6" vertical={false} />
                           <XAxis dataKey="day" tick={{ fontSize: 11, fill: "#8B90A8" }} axisLine={false} tickLine={false} />
                           <YAxis tick={{ fontSize: 11, fill: "#8B90A8" }} axisLine={false} tickLine={false} width={32} />
-                          <Tooltip
-                            contentStyle={{ borderRadius: 12, border: "1px solid #ECEEF6", fontSize: 12 }}
-                            labelStyle={{ fontWeight: 700 }}
-                          />
+                          <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #ECEEF6", fontSize: 12 }} labelStyle={{ fontWeight: 700 }} />
                           <Line type="monotone" dataKey="heartRate" name="Heart Rate" stroke="#FF6B81" strokeWidth={2.5} dot={false} />
                           <Line type="monotone" dataKey="spo2" name="SpO₂" stroke="#3EA8FF" strokeWidth={2.5} dot={false} />
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
                     <div className="mt-2 flex gap-4 text-xs text-ink-muted">
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-rose" /> Heart Rate (bpm)
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-sky" /> SpO₂ (%)
-                      </span>
+                      <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose" /> Heart Rate (bpm)</span>
+                      <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-sky" /> SpO₂ (%)</span>
                     </div>
                   </div>
                 </div>

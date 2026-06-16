@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, Send, Search, Circle } from "lucide-react";
+import { Avatar } from "@/components/ui/Avatar";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { useCommunicationsStore } from "@/store/useCommunicationsStore";
@@ -68,9 +69,7 @@ export default function CommunicationsPage() {
                       )}
                     >
                       <span className="relative shrink-0">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: conv.avatarColor }} aria-hidden="true">
-                          {conv.name.charAt(0)}
-                        </span>
+                        <Avatar name={conv.name} color={conv.avatarColor} size={40} />
                         {conv.online && (
                           <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-mint ring-2 ring-bg-surface" aria-label="Online" />
                         )}
@@ -104,9 +103,7 @@ export default function CommunicationsPage() {
                     <ArrowLeft size={18} />
                   </button>
                   <span className="relative shrink-0">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: active.avatarColor }} aria-hidden="true">
-                      {active.name.charAt(0)}
-                    </span>
+                    <Avatar name={active.name} color={active.avatarColor} size={40} />
                     {active.online && <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-mint ring-2 ring-bg-surface" />}
                   </span>
                   <div className="min-w-0">
@@ -122,9 +119,7 @@ export default function CommunicationsPage() {
                   {active.messages.map((message) => (
                     <div key={message.id} className={cn("flex items-end gap-2", message.sender === "me" && "flex-row-reverse")}>
                       {message.sender === "them" && (
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white" style={{ backgroundColor: active.avatarColor }} aria-hidden="true">
-                          {active.name.charAt(0)}
-                        </span>
+                        <Avatar name={active.name} color={active.avatarColor} size={28} />
                       )}
                       <div className={cn("max-w-[78%] rounded-xl px-3.5 py-2 text-sm leading-relaxed sm:max-w-[65%]", message.sender === "me" ? "bg-brand text-white" : "bg-bg-subtle text-ink")}>
                         {message.text}
