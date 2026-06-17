@@ -160,7 +160,7 @@ export default function BillingPage() {
                   </button>
                 ))}
               </div>
-              <Select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="w-auto" aria-label="Sort invoices">
+              <Select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="w-auto border border-dashed text-sm" aria-label="Sort invoices">
                 <option value="date">Sort: Date</option>
                 <option value="amount">Sort: Amount</option>
                 <option value="patient">Sort: Patient Name</option>
@@ -195,21 +195,21 @@ export default function BillingPage() {
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3">
                           <Avatar name={inv.patientName} color={inv.avatarColor} size={32} />
-                          <span className="text-ink-muted">{inv.patientName}</span>
+                          <span className="text-ink-muted text-xs">{inv.patientName}</span>
                         </div>
                       </td>
-                      <td className="px-5 py-3 text-ink-muted">{inv.service}</td>
-                      <td className="px-5 py-3 text-ink-muted">
+                      <td className="px-5 py-3 text-ink-muted text-xs">{inv.service}</td>
+                      <td className="px-5 py-3 text-ink-muted text-xs">
                         {inv.date}
                         <br />
                         <span className="text-xs text-ink-faint">Due {inv.dueDate}</span>
                       </td>
-                      <td className="px-5 py-3 text-ink-muted">{inv.method}</td>
-                      <td className="px-5 py-3 font-bold text-ink">{currency(inv.amount)}</td>
-                      <td className="px-5 py-3">
+                      <td className="px-5 py-3 text-ink-muted text-xs">{inv.method}</td>
+                      <td className="px-5 py-3 font-bold text-ink text-xs">{currency(inv.amount)}</td>
+                      <td className="px-5 py- text-xs">
                         <Badge tone={statusTone[inv.status]}>{inv.status}</Badge>
                       </td>
-                      <td className="px-5 py-3 text-right">
+                      <td className="px-5 py-3 text-right text-xs">
                         {inv.status !== "Paid" ? (
                           <Button size="sm" variant="success" onClick={() => handleMarkPaid(inv)}>
                             Mark Paid

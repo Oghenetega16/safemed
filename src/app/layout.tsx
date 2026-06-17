@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} font-sans antialiased text-ink bg-bg`}>
+      <body suppressHydrationWarning className={`${manrope.variable} font-sans antialiased text-ink bg-bg`}>
         <QueryProvider>
           {children}
           <Toaster />

@@ -99,7 +99,7 @@ export default function MrDocsPage() {
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <SearchInput value={search} onChange={(v) => updateFilter(() => setSearch(v))} placeholder="Search documents, patients or doctors..." className="w-full lg:max-w-sm" />
             <div className="flex flex-wrap items-center gap-2">
-              <Select value={typeFilter} onChange={(e) => updateFilter(() => setTypeFilter(e.target.value as typeof typeFilter))} className="w-auto" aria-label="Filter by document type">
+              <Select value={typeFilter} onChange={(e) => updateFilter(() => setTypeFilter(e.target.value as typeof typeFilter))} className="w-auto border border-dashed text-sm" aria-label="Filter by document type">
                 {typeFilters.map((t) => (
                   <option key={t} value={t}>
                     {t === "All" ? "All Types" : t}

@@ -196,14 +196,14 @@ export default function AppointmentsPage() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <SearchInput value={search} onChange={(v) => updateFilter(() => setSearch(v))} placeholder="Search patient, type or ID..." className="sm:w-64" />
                 <div className="flex gap-2">
-                  <Select value={statusFilter} onChange={(e) => updateFilter(() => setStatusFilter(e.target.value as typeof statusFilter))} className="w-auto" aria-label="Filter by status">
+                  <Select value={statusFilter} onChange={(e) => updateFilter(() => setStatusFilter(e.target.value as typeof statusFilter))} className="w-auto border border-dashed text-sm" aria-label="Filter by status">
                     {statusFilters.map((s) => (
                       <option key={s} value={s} className="capitalize">
                         {s === "All" ? "All Statuses" : s.charAt(0).toUpperCase() + s.slice(1)}
                       </option>
                     ))}
                   </Select>
-                  <Select value={doctorFilter} onChange={(e) => updateFilter(() => setDoctorFilter(e.target.value))} className="w-auto" aria-label="Filter by doctor">
+                  <Select value={doctorFilter} onChange={(e) => updateFilter(() => setDoctorFilter(e.target.value))} className="w-auto border border-dashed text-sm" aria-label="Filter by doctor">
                     <option value="All">All Doctors</option>
                     {doctorOptions.map((d) => (
                       <option key={d}>{d}</option>
@@ -246,18 +246,18 @@ export default function AppointmentsPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-5 py-3 text-ink-muted">
+                          <td className="px-5 py-3 text-ink-muted text-xs">
                             {formatDateLabel(appt.date)}
                             <br />
                             <span className="text-xs text-ink-faint">{appt.time} · {appt.duration}</span>
                           </td>
-                          <td className="px-5 py-3 text-ink-muted">{appt.doctor}</td>
-                          <td className="px-5 py-3 text-ink-muted">{appt.department}</td>
-                          <td className="px-5 py-3 text-ink-muted">{appt.type}</td>
-                          <td className="px-5 py-3">
+                          <td className="px-5 py-3 text-ink-muted text-xs">{appt.doctor}</td>
+                          <td className="px-5 py-3 text-ink-muted text-xs">{appt.department}</td>
+                          <td className="px-5 py-3 text-ink-muted text-xs">{appt.type}</td>
+                          <td className="px-5 py-3 text-xs">
                             <Badge tone={statusTone[appt.status]} className="capitalize">{appt.status}</Badge>
                           </td>
-                          <td className="px-5 py-3">
+                          <td className="px-5 py-3 text-xs">
                             <div className="flex justify-end">
                               <AppointmentActions appt={appt} onStatus={handleStatus} />
                             </div>

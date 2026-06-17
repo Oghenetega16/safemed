@@ -143,7 +143,7 @@ export default function PatientsPage() {
               <Select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                className="w-auto"
+                className="w-auto text-sm border border-dashed"
                 aria-label="Sort patients"
               >
                 <option value="lastVisit">Sort: Recent Visit</option>
@@ -194,17 +194,17 @@ export default function PatientsPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-3 text-ink-muted">{patient.age} · {patient.gender}</td>
-                      <td className="px-5 py-3 text-ink-muted">{patient.condition}</td>
-                      <td className="px-5 py-3 text-ink-muted">{patient.ward}</td>
-                      <td className="px-5 py-3">
+                      <td className="px-5 py-3 text-ink-muted text-xs">{patient.age} · {patient.gender}</td>
+                      <td className="px-5 py-3 text-ink-muted text-xs">{patient.condition}</td>
+                      <td className="px-5 py-3 text-ink-muted text-xs">{patient.ward}</td>
+                      <td className="px-5 py-3 text-xs">
                         <Badge tone={statusTone[patient.status]}>{patient.status}</Badge>
                       </td>
-                      <td className="px-5 py-3">
+                      <td className="px-5 py-3 text-xs">
                         <Badge tone={riskTone[patient.riskLevel]}>{patient.riskLevel}</Badge>
                       </td>
-                      <td className="px-5 py-3 text-ink-muted">{patient.lastVisit}</td>
-                      <td className="px-5 py-3 text-right">
+                      <td className="px-5 py-3 text-ink-muted text-xs">{patient.lastVisit}</td>
+                      <td className="px-5 py-3 text-right text-xs">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();

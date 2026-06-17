@@ -109,7 +109,7 @@ export default function InventoryPage() {
                   </button>
                 ))}
               </div>
-              <Select value={categoryFilter} onChange={(e) => updateFilter(() => setCategoryFilter(e.target.value))} className="w-auto" aria-label="Filter by category">
+              <Select value={categoryFilter} onChange={(e) => updateFilter(() => setCategoryFilter(e.target.value))} className="w-auto border border-dashed text-sm" aria-label="Filter by category">
                 <option value="All">All Categories</option>
                 {inventoryCategories.map((c) => (
                   <option key={c}>{c}</option>

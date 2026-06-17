@@ -51,7 +51,7 @@ export function StatCards() {
             </div>
             <p className="mt-4 text-sm font-medium text-ink-muted">
               {card.label}
-              <span className="ml-1 text-ink-faint">· {card.sublabel}</span>
+              <span className="ml-1 text-ink-faint text-xs">· {card.sublabel}</span>
             </p>
             <p className="mt-1 text-3xl font-extrabold tracking-tight text-ink">{card.value}</p>
             <p className="mt-1 truncate text-xs text-ink-faint">{card.trendLabel}</p>
